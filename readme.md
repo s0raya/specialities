@@ -15,13 +15,13 @@ Una vez clonado el ejercico deberás hacer `npm install` en terminal para instal
   - Configura un servidor Express.
   - Crea rutas para la página principal (/) y diferentes especialidades como marketing (/marketing), developers (/developers), etc...
   - Implementa el manejo de errores 404 para rutas no definidas.
-  - Las rutas serán las mismas de las `specialty` (abajo hay un objeto con datos que usarás para crear lo qiue pide el ejercicio)
+  - Las rutas serán las mismas de las `specialty` (abajo hay un objeto con datos que usarás para crear lo que pide el ejercicio)
 
 3. Filtrado de Usuarios por Especialidad:
   - Crea una función para filtrar usuarios por su especialidad.
 
 4. Generación de Páginas HTML:
-  - Utiliza literal string para construir páginas HTML directamente en el código..
+  - Utiliza literal string para construir páginas HTML directamente en el código.
   - Crea una página para cada especialidad que muestre el título de la página, el número de personas y los detalles de cada usuario.
 
 5. Prueba de la Aplicación:
