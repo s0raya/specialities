@@ -31,8 +31,15 @@ const usersData = [
     { id: 28, name: 'Bryan', age: 26, specialty: 'QAs' },
     { id: 29, name: 'Cynthia', age: 32, specialty: 'ventas' },
     { id: 30, name: 'Derek', age: 30, specialty: 'marketing' },
-  ];
+];
 
+/********************* CLASE */
+/*
+const getUsers = specialty => {
+    return userData.filter(user => user.specialty === specialty)
+}
+
+*/
 
 const getUsers = specialty => {
     let count = 0;
@@ -49,109 +56,77 @@ const getUsers = specialty => {
             `
         }
     })
-    return { printUsers, count};
+    return { printUsers, count };
 }
+const uniqueSpecialty = [...new Set(usersData.map(user => user.specialty))];
 
-const printHTML = () => {
-    return head = `    
+const navNames = `${uniqueSpecialty.map(url => `<a href="/${url}">${url}</a>`).join(' | ')}`
+const nav = `<a href="/">home</a> | ${navNames}`
+
+const printHTML = (specialty) => {
+    const users = getUsers(specialty).printUsers;
+    const counter = getUsers(specialty).count;
+    const template = `    
     <!DOCTYPE html>
     <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Especialidades</title>
-    </head>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Especialidades</title>
+        </head>
+        <body>
+        <nav>${nav}</nav>
+            <h1>${specialty}</h1>
+            <h3>El número total de personas especializadas en marketing es de: ${counter}</h3>
+            <ul>
+                ${users}
+            </ul>
+            <nav>${nav}</nav>
+        </body>
+    </html>
     `
+    return template;
 }
+
 
 
 app.get('/', (req,res) => {
     res.send(`
-    ${printHTML()}
-    <body>
-        <h1>¿Que especialidad estás buscando?</h1>
-        <h3>Elige una de las siguientes:</h3>
-        <a href="/marketing">Marketing</a>
-        <a href="/developers">Developers</a>
-        <a href="/QAs">QAs</a>
-        <a href="/ventas">Ventas</a>
-        <a href="/otros">otros</a>     
-    </body>
-    </html>
+    <!DOCTYPE html>
+        <html lang="es">
+            <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Especialidades</title>
+            </head>
+            <body>
+                <h1>¿Que especialidad estás buscando?</h1>
+                <h3>Elige una de las siguientes:</h3>
+                <nav>${nav}</nav>
+            </body>
+        </html>
     `
     )
 })
 
 app.get('/marketing', (req,res) => {
-    res.send(`
-    ${printHTML()}
-        <body>
-            <h1>Marketing</h1>
-            <h3>El número total de personas especializadas en marketing es de: ${getUsers('marketing').count}</h3>
-            ${getUsers('marketing').printUsers}
-            <a href="/">Home</a>
-            <a href="/developers">Developers</a>
-            <a href="/QAs">QAs</a>
-            <a href="/ventas">Ventas</a>
-            <a href="/otros">otros</a>
-        </body>
-        </html>
-        `
-    )
+    const specialty = 'marketing'
+    res.send(printHTML(specialty));
 })
 
 app.get('/developers', (req,res) => {
-    res.send(`
-    ${printHTML()}
-        <body>
-            <h1>Developers</h1>
-            <h3>El número total de personas especializadas en desarrollo es de: ${getUsers('developers').count}</h3>
-            ${getUsers('developers').printUsers}
-            <a href="/">Home</a>
-            <a href="/marketing">Marketing</a>
-            <a href="/QAs">QAs</a>
-            <a href="/ventas">Ventas</a>
-            <a href="/otros">otros</a>   
-        </body>
-        </html>
-        `
-    )
+    const specialty = 'developers'
+    res.send(printHTML(specialty));
 })
 
 app.get('/QAs', (req,res) => {
-    res.send(`
-    ${printHTML()}
-        <body>
-            <h1>QAs</h1>
-            <h3>El número total de personas especializadas en QAs es de: ${getUsers('QAs').count}</h3>
-            ${getUsers('QAs').printUsers}
-            <a href="/">Home</a>
-            <a href="/marketing">Marketing</a>
-            <a href="/developers">Developers</a>
-            <a href="/ventas">Ventas</a>
-            <a href="/otros">otros</a>     
-        </body>
-        </html>
-        `
-    )
+    const specialty = 'QAs'
+    res.send(printHTML(specialty));
 })
 
 app.get('/ventas', (req,res) => {
-    res.send(`
-    ${printHTML()}
-        <body>
-            <h1>Ventas</h1>
-            <h3>El número total de personas especializadas en ventas es de: ${getUsers('ventas').count}</h3>
-            ${getUsers('ventas').printUsers}
-            <a href="/">Home</a>
-            <a href="/marketing">Marketing</a>
-            <a href="/developers">Developers</a>
-            <a href="/QAs">QAs</a>
-            <a href="/otros">otros</a>     
-        </body>
-        </html>
-        `
-    )
+    const specialty = 'ventas'
+    res.send(printHTML(specialty));
 })
 
 app.use((req,res) => {
